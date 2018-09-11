@@ -33,15 +33,20 @@ class Interlayer:
     
     delta = 0.001
     
-    def __init__(self, struct):
+    def __init__(self, struct, ref_z=0.0000):
         """
         Parameters
         ----------
         Struct : Structure object (from pymatgen)
             Structure object from pymatgen,
             which has informations about atomic coordinates.
+        
+        ref_z : float
+            Z-coordinates of reference layer, which generate
+            the change of interlayer distance.
         """
         self.struct = struct
+        self.ref_z = ref_z
         self.reducible_list = []
         self.irreducible_list = []
         self.__get_irreducible_list()
