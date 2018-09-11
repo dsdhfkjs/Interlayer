@@ -73,6 +73,9 @@ class Interlayer:
                     nsites = 1
                     pre_site = site
         self.irreducible_list.append([sum/nsites, pre_site[1]])
+        
+        # sort by z-coordinates
+        self.irreducible_list.sort(key=itemgetter(0))
     
     def __get_reducible_list(self):
         """
