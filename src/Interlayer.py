@@ -77,6 +77,12 @@ class Interlayer:
         # sort by z-coordinates
         self.irreducible_list.sort(key=itemgetter(0))
     
+    def show_irreducible_list(self):
+        print("z\telement")
+        for site in self.irreducible_list:
+            print(str(site[0]) + "\t" + str(site[1])
+            )
+    
     def __get_reducible_list(self):
         """
         Getting reducible list from pymatgen format structural data.
@@ -92,16 +98,12 @@ class Interlayer:
         self.reducible_list.sort(key=itemgetter(1))
 
 if __name__ == "__main__":
-    print(Interlayer(v2p.vasp2pymatgen(
-        "../test/vasp/POSCAR_Al4"
-    )).reducible_list)
-    print(Interlayer(v2p.vasp2pymatgen(
-        "../test/vasp/POSCAR_NaCl"
-    )).reducible_list)
-    print(Interlayer(v2p.vasp2pymatgen(
-        "../test/vasp/POSCAR_Al4"
-    )).irreducible_list)
-    print(Interlayer(v2p.vasp2pymatgen(
-        "../test/vasp/POSCAR_NaCl"
-    )).irreducible_list)
+    layer_Al4 = Interlayer(v2p.vasp2pymatgen("../test/vasp/POSCAR_Al4"))
+    layer_NaCl = Interlayer(v2p.vasp2pymatgen("../test/vasp/POSCAR_NaCl"))
+    print(layer_Al4.reducible_list)
+    print(layer_NaCl.reducible_list)
+    print(layer_Al4.irreducible_list)
+    print(layer_NaCl.irreducible_list)
+    layer_Al4.show_irreducible_list()
+    layer_NaCl.show_irreducible_list()
 
