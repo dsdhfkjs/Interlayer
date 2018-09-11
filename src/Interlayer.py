@@ -76,7 +76,7 @@ class Interlayer:
                 pre_site = site
             else:
                 if (
-                    site[0] - pre_site[0] < self.delta and
+                    abs(site[0] - pre_site[0]) < self.delta and
                     site[1] is pre_site[1]
                 ):
                     sum += site[0]
@@ -141,10 +141,8 @@ if __name__ == "__main__":
     
     layer_Al4 = Interlayer(v2p.vasp2pymatgen("../test/vasp/POSCAR_Al4"))
     layer_NaCl = Interlayer(v2p.vasp2pymatgen("../test/vasp/POSCAR_NaCl"))
-    print(layer_Al4.reducible_list)
-    print(layer_NaCl.reducible_list)
-    print(layer_Al4.irreducible_list)
-    print(layer_NaCl.irreducible_list)
+    layer_Si = Interlayer(v2p.vasp2pymatgen("../test/vasp/POSCAR_Si"))
+    print(layer_Si.irreducible_list)
     layer_Al4.show_irreducible_list()
     layer_NaCl.show_irreducible_list()
-    
+    layer_Si.show_irreducible_list()
