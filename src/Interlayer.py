@@ -78,8 +78,9 @@ class Interlayer:
         """
         Getting reducible list from pymatgen format structural data.
         """
-        for site in self.struct:
-            self.reducible_list.append([site.c, site.specie])
+        for site in range(len(self.struct)):
+            self.reducible_list.append([self.struct.cart_coords[site][2],
+                                        self.struct.species[site]])
         
         # sort by z-coordinates
         self.reducible_list.sort(key=itemgetter(0))
