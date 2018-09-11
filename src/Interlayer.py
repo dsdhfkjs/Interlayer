@@ -51,12 +51,13 @@ class Interlayer:
             the change of interlayer distance.
         """
         self.struct = struct
-        self.ref_z = ref_z
+        self.__ref_z = ref_z
         
         self.__check_valid_struct()
         
         self.reducible_list = []
         self.irreducible_list = []
+        
         self.__get_irreducible_list()
     
     def __get_irreducible_list(self):
@@ -65,6 +66,7 @@ class Interlayer:
 
         """
         self.__get_reducible_list()
+        self.__shift_ref_z()
         
         pre_site = None
         for site in self.reducible_list:
@@ -109,6 +111,18 @@ class Interlayer:
         
         # sort by elements
         self.reducible_list.sort(key=itemgetter(1))
+    
+    def __shift_ref_z(self):
+        """
+        Shifting ref_z to the center of layer.
+        """
+        for site in self.reducible_list:
+            site[0] -= self.__ref_z
+            if abs(site[0]) > self.struct.lattice.matrix[2][2] / 2:
+                site[0] -= (
+                    self.struct.lattice.matrix[2][2] 
+                    * (site[0] / abs(site[0]))
+                )
     
     def __check_valid_struct(self):
         """
