@@ -22,6 +22,10 @@ class Interlayer:
     delta : float
         Calculation threshold to z-coordinates difference.
         
+    epsilon : float
+        Threshold to c_x and c_y, if whose value is larger than
+        epsilon, interlayer distance has no sence.
+        
     irreducible_list : list of z-coordinates and elements
         List of reducible z-coordinates and elements
         sorted by these list elements.
@@ -32,6 +36,7 @@ class Interlayer:
     """
     
     delta = 0.001
+    epsilon = 0.00001
     
     def __init__(self, struct, ref_z=0.0000):
         """
@@ -47,6 +52,9 @@ class Interlayer:
         """
         self.struct = struct
         self.ref_z = ref_z
+        
+        self.__check_valid_struct()
+        
         self.reducible_list = []
         self.irreducible_list = []
         self.__get_irreducible_list()
@@ -101,8 +109,22 @@ class Interlayer:
         
         # sort by elements
         self.reducible_list.sort(key=itemgetter(1))
+    
+    def __check_valid_struct(self):
+        """
+        Checking whether struct is valid.
+        
+        If the value of x or y of lattice vector c is not 0,
+        interlayer distance has no sence to consider in normal situation.
+        """
+        assert abs(self.struct.lattice.matrix[2][0]) < self.epsilon and \
+               abs(self.struct.lattice.matrix[2][1]) < self.epsilon, \
+               "ERROR: c_x or c_y is larger than epsilon."
+    
 
 if __name__ == "__main__":
+    #layer_assert = Interlayer(v2p.vasp2pymatgen("../test/vasp/POSCAR_assert"))
+    
     layer_Al4 = Interlayer(v2p.vasp2pymatgen("../test/vasp/POSCAR_Al4"))
     layer_NaCl = Interlayer(v2p.vasp2pymatgen("../test/vasp/POSCAR_NaCl"))
     print(layer_Al4.reducible_list)
@@ -111,4 +133,4 @@ if __name__ == "__main__":
     print(layer_NaCl.irreducible_list)
     layer_Al4.show_irreducible_list()
     layer_NaCl.show_irreducible_list()
-
+    
