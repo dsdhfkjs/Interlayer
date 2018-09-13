@@ -8,9 +8,7 @@ from the pymatgen format structural data.
 """
 
 from operator import itemgetter
-
 import pymatgen as mg
-from Vasp2pymatgen import Vasp2pymatgen as v2p
 
 
 class Interlayer:
