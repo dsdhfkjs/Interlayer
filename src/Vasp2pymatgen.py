@@ -27,10 +27,3 @@ class Vasp2pymatgen:
         (none) : Structure object (from pymatgen)
         """
         return mg.Structure.from_str(open(vasp).read(), fmt="poscar")
-
-if __name__ == "__main__":
-    
-    from Vasp2pymatgen import Vasp2pymatgen as v2p
-    
-    struct = v2p.vasp2pymatgen("../test/vasp/POSCAR")
-    print(struct)
