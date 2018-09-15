@@ -14,7 +14,7 @@ In preparation.
 
 ## Requirement
 
-Nothing special.
+You must install pymatgen module from [here](https://github.com/materialsproject/pymatgen).
 
 ## Usage
 
