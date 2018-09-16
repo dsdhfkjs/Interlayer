@@ -28,7 +28,7 @@ class Interlayer:
         List of reducible z-coordinates and elements
         sorted by these list elements.
         
-    reducible_list : list of z-coordinates and elements
+    __reducible_list : list of z-coordinates and elements
         List of reducible z-coordinates and elements
         sorted by these list elements (mainly for debug).
     """
@@ -53,7 +53,7 @@ class Interlayer:
         
         self.__check_valid_struct()
         
-        self.reducible_list = []
+        self.__reducible_list = []
         self.irreducible_list = []
         
         self.__get_irreducible_list()
@@ -67,7 +67,7 @@ class Interlayer:
         self.__shift_ref_z()
         
         pre_site = None
-        for site in self.reducible_list:
+        for site in self.__reducible_list:
             if pre_site is None:
                 sum = site[0]
                 nsites = 1
@@ -101,20 +101,20 @@ class Interlayer:
         Getting reducible list from pymatgen format structural data.
         """
         for site in range(len(self.struct)):
-            self.reducible_list.append([self.struct.cart_coords[site][2],
+            self.__reducible_list.append([self.struct.cart_coords[site][2],
                                         self.struct.species[site]])
         
         # sort by z-coordinates
-        self.reducible_list.sort(key=itemgetter(0))
+        self.__reducible_list.sort(key=itemgetter(0))
         
         # sort by elements
-        self.reducible_list.sort(key=itemgetter(1))
+        self.__reducible_list.sort(key=itemgetter(1))
     
     def __shift_ref_z(self):
         """
         Shifting ref_z to the center of layer.
         """
-        for site in self.reducible_list:
+        for site in self.__reducible_list:
             site[0] -= self.__ref_z
             if abs(site[0]) > self.struct.lattice.matrix[2][2] / 2:
                 site[0] -= (
