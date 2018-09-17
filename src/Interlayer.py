@@ -34,7 +34,7 @@ class Interlayer:
     """
     
     delta = 0.001
-    epsilon = 0.00001
+    epsilon = 0.0001
     
     def __init__(self, struct, ref_z=0.0000):
         """
