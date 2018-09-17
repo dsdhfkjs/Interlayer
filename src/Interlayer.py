@@ -122,6 +122,19 @@ class Interlayer:
                     * (site[0] / abs(site[0]))
                 )
     
+    @classmethod
+    def calc_displacement(cls, list_relaxed, list_initial):
+        """
+        Calculating displacement list from initial structure.
+        """
+        displacement_list = []
+        for enum, list in enumerate(list_relaxed.irreducible_list):
+            displacement_list.append([
+                list[0] - list_initial.irreducible_list[enum][0],
+                list[1]
+            ])
+        return displacement_list
+    
     def __check_valid_struct(self):
         """
         Checking whether struct is valid.
@@ -132,4 +145,3 @@ class Interlayer:
         assert abs(self.struct.lattice.matrix[2][0]) < self.epsilon and \
                abs(self.struct.lattice.matrix[2][1]) < self.epsilon, \
                "ERROR: c_x or c_y is larger than epsilon."
-
